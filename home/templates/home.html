@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+{% block content %}
+        <!-- Home Page Content (Default) -->
+        <section class="page-section">
+            <div class="container">
+                <div class="hero">
+                    <h1>Manage Your Contacts Effortlessly</h1>
+                    <p>ContactApp helps you organize and manage all your contacts in one place with a beautiful, intuitive interface.</p>
+                    <a href="{% url 'contacts' %}" class="cta-btn">Get Started</a>
+                </div>
+                
+                <h2 class="page-title">Why Choose ContactApp?</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Easy Contact Management</h3>
+                        <p>Add, edit, and delete contacts with just a few clicks. Keep all your important connections organized.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Fully Responsive</h3>
+                        <p>Access your contacts from any device - desktop, tablet, or mobile. Your data syncs across all platforms.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Secure & Private</h3>
+                        <p>Your contact data is encrypted and secure. We prioritize your privacy and data protection.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+{% endblock %}

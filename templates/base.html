@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContactApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-address-book"></i>
+                ContactApp
+            </a>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{% url 'contacts' %}" class="{% if request.resolver_match.url_name == 'contact_list' %}active{% endif %}">Contact</a></li>
+            </ul>
+            <div class="nav-auth">
+                <!-- Before login - show login button -->
+                {% if not user.is_authenticated %}
+                <a href="{% url 'login' %}" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                {% else %}
+                <!-- After login - show profile image -->
+                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=4f46e5&color=fff" 
+                     alt="Profile" class="profile-img">
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Django Messages -->
+    {% if messages %}
+    <div class="container messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content Block -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-address-book"></i> ContactApp
+                </div>
+                <ul class="footer-links">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'contacts' %}">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                &copy; 2023 ContactApp. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
