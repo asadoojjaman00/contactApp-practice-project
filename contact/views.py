@@ -1,15 +1,22 @@
 from django.shortcuts import render , redirect , get_list_or_404,get_object_or_404
 from .models import Contact
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 # contact view function
+@login_required(login_url='login')
 def contacts(request):
-    contacts = Contact.objects.all()
+    if not request.user.is_authenticated:
+        messages.error(request, "login fast")
+        return redirect('login')
+    contacts = Contact.objects.filter(user=request.user)
     return render(request, 'contact_page.html', { "contacts" : contacts })
 
 
 
 # new contact add function
+@login_required(login_url='login')
 def add_contact(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -18,6 +25,7 @@ def add_contact(request):
         company = request.POST.get("company")
 
         Contact.objects.create(
+            user = request.user,
             name = name,
             email = email,
             phone = phone,
@@ -30,9 +38,10 @@ def add_contact(request):
 
 
 # contact edit function
+@login_required(login_url='login')
 def update_contact(request, id): 
 
-    contact = get_object_or_404(Contact, id=id)
+    contact = get_object_or_404(Contact, id=id, user = request.user)
 
     if request.method == "POST":
         contact.name = request.POST.get("name")
@@ -46,8 +55,10 @@ def update_contact(request, id):
 
 
 # contact remove/delete function
+@login_required(login_url='login')
+
 def delete_contact(request, id):
-    contact = get_object_or_404(Contact, id=id)
+    contact = get_object_or_404(Contact, id=id, user = request.user)
     if request.method == "POST":
         contact.delete()
         return redirect("contacts")
